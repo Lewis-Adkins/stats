@@ -67,7 +67,6 @@ result = random.choice(a)
 # Repeat the experiment n times
 n = 2
 
-
 results = np.random.randint(0,1, size = n, dtype = int).tolist()
 
 print(f"n = {n} experiments:")
