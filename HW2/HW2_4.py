@@ -33,11 +33,11 @@ def run_simulation(data: list, n_values: int, n_experiments: int) -> None:
 
     plt.plot(list(results.keys()), list(results.values()), label = 'experiment')
 
-def P(x:int, n: int, p: float) -> float:
+def P_discrete(x:int, n: int, p: float) -> float:
     '''
     For n trials, the probability of successess is given bth the Binomial distribution:
     P(x) = (n x) p^x (1-p)^(n-x)
-    arg1 x = number of successful outcomes you wnat to count
+    arg1 x = number of successful outcomes you want to count
     arg2 n = number of trials
     arg3 p = probabiltiy of success
     '''
@@ -45,18 +45,33 @@ def P(x:int, n: int, p: float) -> float:
     return (math.factorial(n) / (math.factorial(x) * math.factorial(n-x))) * p**x * (1-p) ** (n-x)
 
 
+def p_continuous(x: int, n: int, p: float) -> float:
+    '''
+    For n trials, the probability of successess is given bth the Binomial distribution:
+    P(x) = 1/sqrt(2* pi * n * p * q) * exp(-(x-np)^2 / (2 * n * p * q)
+    arg1 x = number of successful outcomes you want to count
+    arg2 n = number of trials
+    arg3 p = probabiltiy of success
+    '''
+    return 1 / math.sqrt(2 * math.pi * n * p * (1-p)) * math.exp(-(x - n * p)**2 / (2 * n * p *(1-p)))
+
 def plot_P(n: int, p: float) -> None:
     xs = np.arange(n).tolist()
-    Px = [P(x, n, p)  for x in xs]
-    plt.plot(xs, Px, label = r'$P(x)$')
+    Px_dis = [P_discrete(x, n, p)  for x in xs]
 
+    Px_cont = [p_continuous(x,n,p) for x in xs]
+    plt.plot(xs, Px_dis, label = r'$P(x)_\text{dis}$')
+    plt.plot(xs, Px_cont, label = r'$P(x)_\text{cont}$')
 
 
 def main():
 
     run_simulation(data, n_values, n_experiments)
     plot_P(n_values, p)
+    plt.title(f"{r"$n_{\text{ex}}=$"}{n_experiments} {r"$n_\text{v} = $"}{n_values}, {r"$p = $"}{p}")
     plt.xlim(0,n_values)
+    plt.xlabel(r"$x$ : " + "Number of times " +r"$1$" + "was selected in dataset " + r"$n_v$" + " times"  )
+    plt.ylabel(r"$P$ :" + "Probability of selecting " + r"$1$" + " " +  r"$x$" + " number of times")
     plt.legend()
     plt.show()
 
