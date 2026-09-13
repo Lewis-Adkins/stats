@@ -30,10 +30,10 @@ def run_simulation(data: list, n_values: int, n_experiments: int) -> None:
     for n_ex in range(n_experiments):
         n_1s = execute_experiment(data, n_values).count(1)
         results[n_1s] += 1/n_experiments
-
+    print(results)
     plt.plot(list(results.keys()), list(results.values()), label = 'experiment')
 
-def P_discrete(x:int, n: int, p: float) -> float:
+def p_discrete(x:int, n: int, p: float) -> float:
     '''
     For n trials, the probability of successess is given bth the Binomial distribution:
     P(x) = (n x) p^x (1-p)^(n-x)
@@ -57,7 +57,7 @@ def p_continuous(x: int, n: int, p: float) -> float:
 
 def plot_P(n: int, p: float) -> None:
     xs = np.arange(n).tolist()
-    Px_dis = [P_discrete(x, n, p)  for x in xs]
+    Px_dis = [p_discrete(x, n, p)  for x in xs]
 
     Px_cont = [p_continuous(x,n,p) for x in xs]
     plt.plot(xs, Px_dis, label = r'$P(x)_\text{dis}$')
