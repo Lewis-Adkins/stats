@@ -34,11 +34,9 @@ def generate_sample_means(n_experiments: int, n_trials: int)-> np.array:
 def main():
     
     X_bars = generate_sample_means(n_experiments, n_trials)
-
-    np.savetxt("X_bars.txt", X_bars)
     plt.hist(X_bars, bins = int(n_experiments / n_trials), density = True, edgecolor = "black", align = "left")
     plt.title(r"Average of $\bar{X}$")
-    plt.savefig("HW3_2_1.png")
+    plt.savefig(f"HW3_2_1.png")
     plt.show()
 
 
