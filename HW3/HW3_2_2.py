@@ -1,13 +1,18 @@
 import matplotlib.pyplot as plt
 import numpy  as np
 
-n_trials      = 10
-n_experiments = 1000
+n_trials      = 100
+n_experiments = 10000
 mu_min        = -0.01
 mu_max        = 0.01
 n_min         = 1
 n_max         = n_experiments
-n_step        = 50
+n_step        = 500
+mu_mins       = np.array([-.1,-.01,-.001])
+
+def chebyshev(n_range: np.array, mu_min:float, mu_max: float) -> np.array:
+    return 1 - ( 1 / (((mu_max - mu_min)/2)**2 * n_range))
+
 
 def part_1(min: float, max: float, n_trials: int, n_experiments: int) -> float:
     '''
@@ -16,9 +21,10 @@ def part_1(min: float, max: float, n_trials: int, n_experiments: int) -> float:
     '''
     X_bars = generate_sample_means(n_experiments, n_trials)
 
-    in_range = X_bars[(X_bars >= min) & (X_bars <= max)].size / X_bars.size
+    return get_fraction_within_epsilon(X_bars, min, max)
 
-    return in_range
+
+
 
 def part_2(n_experiments: int, n_min: int, n_max, n_step, mu_min: float, mu_max: float) -> None:
 
@@ -26,12 +32,11 @@ def part_2(n_experiments: int, n_min: int, n_max, n_step, mu_min: float, mu_max:
     in_ranges = np.array([])
 
     for n_r in n_range:
-        print(n_r)
+ 
         in_range  = part_1(mu_min, mu_max, n_r, n_experiments)
         in_ranges = np.append(in_ranges,in_range)
-    print(((mu_max - mu_min)/2)**-2)
+
     
-    chebyshev = 1 - ( 1 / (((mu_max - mu_min)/2)**2 * n_range**2)) # see pdf
     
 
     plt.figure(figsize=(10, 6))
@@ -39,10 +44,8 @@ def part_2(n_experiments: int, n_min: int, n_max, n_step, mu_min: float, mu_max:
     plt.ylabel(fr"Fraction of values in range $\epsilon$:" + f"[{mu_min}, {mu_max}]")
     plt.xlabel(r"$n_r$: The numbers of values drawn from Standard Normal Distribution")
     plt.xscale("log")
-
-    plt.ylim(0,1)
-
-    plt.plot(n_range, chebyshev, label = "chebyshev")
+    # chebyshev_data = chebyshev(n_range,mu_min, mu_max)
+    # plt.plot(n_range, chebyshev_data, label = "chebyshev")
     plt.scatter(n_range, in_ranges, label = fr'$n_r$ vs $P({mu_min} \leq x \leq {mu_max})$')
     plt.legend()
     plt.savefig("HW3_2_2.png")
@@ -50,6 +53,8 @@ def part_2(n_experiments: int, n_min: int, n_max, n_step, mu_min: float, mu_max:
 
 
 
+def get_fraction_within_epsilon(data: np.array, mu_min: float, mu_max: float)-> np.array:
+    return data[(data >= mu_min) & (data <= mu_max)].size / data.size
 
 def get_dataset(n: int) -> np.array:
     '''
