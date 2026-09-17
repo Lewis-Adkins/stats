@@ -7,8 +7,8 @@ mu_max        = 0.01
 
 n_experiments = 10000
 n_min         = 1
-n_max         = n_experiments
-n_step        = 50
+n_max         = n_experiments*10
+n_step        = 5000
 
 epsilons_min  = -3 # 10^-n, specifying n
 epsilons_max  = -1 # 10^-n, specifying n
@@ -16,7 +16,7 @@ epsilons_max  = -1 # 10^-n, specifying n
 fraction_in_range = .99
 box = ""
 
-dist_types = ["std_norm", "uni", "bin", "poi", "chi2", "geo"]
+dist_types =["std_norm", "uni", "bin", "poi", "chi2", "geo"]# ["std_norm", "uni", "bin", "poi", "chi2", "geo"]
 
 def chebyshev(n_range: np.array, mu_min:float, mu_max: float) -> np.array:
     return 1 - ( 1 / (((mu_max - mu_min)/2)**2 * n_range**2))
@@ -34,7 +34,7 @@ def part_1(min: float, max: float, n_trials: int, n_experiments: int, dist_type:
 
 
 
-def part_2(n_experiments: int, n_min: int, n_max, n_step, mu_min: float, mu_max: float, dist_type: float) -> None:
+def part_2(n_experiments: int, n_min: int, n_max, n_step, mu_min: float, mu_max: float, dist_type: float) -> np.array:
 
     n_range   = np.arange(n_min, n_max, n_step)
     in_ranges = np.array([])
@@ -45,22 +45,16 @@ def part_2(n_experiments: int, n_min: int, n_max, n_step, mu_min: float, mu_max:
         in_ranges = np.append(in_ranges,in_range)
 
     
-    box = part_3(n_range, in_ranges, fraction_in_range, mu_min, mu_max)
-    # chebyshev_data = chebyshev(n_range,mu_min, mu_max)   
+    part_3(n_range, in_ranges, fraction_in_range, mu_min, mu_max)
+    # chebyshev_data = chebyshev(n_range,mu_min, mu_max)
 
-    plt.text(
-        1,.5,
-        box,
-        bbox = dict(boxstyle = 'round', facecolor = 'white')
-    )
-
-    # plt.ylim(0,in_ranges.max())
-    plt.scatter(n_range, in_ranges, label = fr'$P({mu_min} \leq x \leq {mu_max})$')
+    plt.plot(n_range, in_ranges, label = fr'$P({mu_min} \leq x \leq {mu_max})$')
     # plt.plot(n_range, chebyshev_data, label = "chebyshev")
+    plt.ylim(0,in_ranges.max())
+    plt.legend()
+    return in_ranges
 
-    # plt.legend()
-
-
+### This part i only need for n_r = 100 not for all n_rs
 def part_3(n_range: np.array, in_ranges: np.array, fraction_in_range: float, mu_min: float, mu_max: float)-> str:
     global box
     fraction_finder = n_range[np.argmax(in_ranges > fraction_in_range)]
@@ -85,26 +79,35 @@ def part_4(n_experiments: int, n_min: int, n_max: int, n_step: int, epsilons_min
     plt.xlabel(fr"$n_r$: The numbers of values drawn from Standard Normal Distribution")
     plt.xscale("log")
     
-
     
 
 
     for ep in epsilons:
         print(fr"Plotting {n_experiments} experiments drawing up to {n_max} values with mean tolerance {ep}")
 
-        part_2(n_experiments, n_min, n_max, n_step, -ep, ep, dist_type)
+        in_ranges = part_2(n_experiments, n_min, n_max, n_step, -ep, ep, dist_type)
+
+
+    plt.text(
+        0.3, in_ranges.max()/2, box,
+        transform=plt.gca().transAxes,
+        ha='right', va='bottom',
+        bbox=dict(boxstyle='round', facecolor='white')
+    )
 
     plt.savefig(f"HW3_2_2_{dist_type}.png")
-    plt.legend()
+    
 
 
 def part_5(n_experiments: int, n_min: int, n_max:int, n_step:int, epsilons_min: float, epsilons_max:float)-> None:
 
     for dt in dist_types:
-        print("="*5, dt, "="*5)
-        part_4(n_experiments, n_min, n_max, n_step, epsilons_min, epsilons_max, dt)
         global box
         box = ""
+        print("="*5, dt, "="*5)
+        part_4(n_experiments, n_min, n_max, n_step, epsilons_min, epsilons_max, dt)
+
+        
     
     
 
@@ -112,7 +115,7 @@ def part_5(n_experiments: int, n_min: int, n_max:int, n_step:int, epsilons_min: 
 def get_fraction_within_epsilon(data: np.array, mu_min: float, mu_max: float)-> np.array:
     return data[(data >= mu_min) & (data <= mu_max)].size / data.size
 
-def get_dataset(n: int, type: str) -> np.array:
+def get_dataset(n: int, n_experiments: int, type: str) -> np.array:
 
     match type:
         case "std_norm":
@@ -124,31 +127,24 @@ def get_dataset(n: int, type: str) -> np.array:
             
             r(x) = 1 / sqrt(2 * pi) * exp [ -x^2 / 2]
             '''
-            return np.random.standard_normal(n) 
+            return np.random.standard_normal(size = (n,n_experiments)) 
         case "bin":
-            return np.random.binomial(n,.5,n)
+            return np.random.binomial(n,.5,size = (n,n_experiments))
         case "uni":
-            return np.random.uniform(size = n)
+            return np.random.uniform(-1, 1, size = (n,n_experiments))
         case "poi":
-            return np.random.poisson(size = n)
+            return np.random.poisson(.01,size = (n,n_experiments))
         case "chi2":
-            return np.random.chisquare(1, n)
+            return np.random.chisquare(.01,size = (n,n_experiments))
         case "geo":
-            return np.random.geometric(.5, n)
+            return np.random.geometric(.1, size = (n,n_experiments))
 
-    
+def generate_sample_means(n_experiments: int, n_trials: int, dist_type: str = "std_norm")-> np.array:
+
+
+    data = get_dataset(n_trials, n_experiments, dist_type)
         
-
-
-
-def generate_sample_means(n_experiments: int, n_trials: int, dist_type: str)-> np.array:
-    X_bars = np.array([])
-
-    for n_ex in range(n_experiments):
-
-        data = get_dataset(n_trials, dist_type)
-        
-        X_bars = np.append(X_bars, data.mean()) 
+    X_bars = np.mean(data, axis = 0)
 
     return X_bars
 
