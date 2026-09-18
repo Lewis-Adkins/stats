@@ -135,7 +135,7 @@ def part_3(n_experiments: int, n_trials: int,  epsilons_min: float, epsilons_max
     arg5: fraction_within = limit of sample means within E before stopping calculations
     arg6: dist_type     = distribution type from possible list =  ["std_norm", "uni", "bin", "poi", "chi2", "gauss", "geo"]
     '''
-
+    
     epsilons = np.linspace(epsilons_min, epsilons_max, 500)
 
     with open("HW3_2/HW3_2_2_3.txt", "w") as f:
@@ -157,7 +157,7 @@ def part_3(n_experiments: int, n_trials: int,  epsilons_min: float, epsilons_max
                     break 
         
 
-    print(fr"$\epsilon$ = {final_ep:.2f}, in_range = {final_in_range} for {dt}")
+            print(fr"$\epsilon$ = {final_ep:.2f}, in_range = {final_in_range} for {dt}")
         
 def part_4(n_experiments: int, n_min: int, n_max: int, n_step: int, epsilons_min: float, epsilons_max: float, dist_type: str) -> None:
     '''
