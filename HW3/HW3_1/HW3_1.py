@@ -148,7 +148,7 @@ def main():
     q1(data, hours_in_day, p_h, ax1)
     q2(data, n_days, ax2)
 
-    plt.savefig("HW3_1.png")
+    plt.savefig("HW3_1/HW3_1.png")
     plt.show()
 
 if __name__ == "__main__":
