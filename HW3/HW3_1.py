@@ -71,7 +71,7 @@ def p_p(x:int, n: int, p: float)-> None:
 def p_b(x:int , n: int, p: float)-> None:
     '''
     P_B(x) expected from the Binomial distribution, from which the Poisson distribution was derived.
-    The Posson distribution is discrete therefore we will use the discrete binomial distribution
+    The Poisson distribution is discrete therefore we will use the discrete binomial distribution
     For n trials, the probability of successess is given bth the Binomial distribution:
     P(x) = (n x) p^x (1-p)^(n-x)
     
