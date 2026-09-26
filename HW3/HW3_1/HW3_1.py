@@ -106,9 +106,9 @@ def q1(data: np.array,n: int, p: float, ax: plt.axes.Axes)->None:
     ax.plot(xs,Pb, label = "binomial")
     ax.plot(xs, Pp, label = "poisson")
     
-    ax.set_title("Distrbution of Flares in a Day")
-    ax.set_ylabel(r"$P(x)$, Probability of obseving a flare in a day")
-    ax.set_xlabel("Number of flares observed in a day")
+    ax.set_title("Distribution of Flares in a Day")
+    ax.set_ylabel(r"$P(x)$, Probability of observing $x$ flares in a day")
+    ax.set_xlabel("$x$, Number of flares observed in a day")
     ax.legend()
 
 
