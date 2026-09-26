@@ -51,6 +51,7 @@ def part_1():
 
     Sbs = np.array([])
 
+    # Try to do with numpy only.
     for n_ex in range(n_experiments):
         sum = 0
         for n_t in range(n_trials):
@@ -69,4 +70,5 @@ def main():
     part_1()
     
 if __name__ == "__main__":
+    ## __name__ == "__main__" is really only needed when a script is imported
     main()

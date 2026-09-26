@@ -106,6 +106,8 @@ def part_3(n_min: int, n_max: int, n_step: float)-> None:
         above_inv_sqrt_n = np.append(above_inv_sqrt_n, part_2(X_bar, n_r))
  
 
+    # Connected lines probably not appropriate when only a few points. When many points,
+    # easier to read plot when connected lines (like a time series).
     plt.plot(n_range, above_inv_sqrt_n)
     plt.xscale("log")
     plt.savefig("HW3_3/HW3_3_1_3.png")
