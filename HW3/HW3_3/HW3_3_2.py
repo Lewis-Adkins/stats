@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 n_trials = 10
 n_experiments = 10000
 
+# See my code for how to put re-used functions in a subdir named "lib".
+
 def get_dataset(n_trials: int, n_experiments: int)-> np.array:
     '''
 
@@ -57,9 +59,8 @@ def part_1():
         for n_t in range(n_trials):
             sum +=(datasets[n_t, n_ex] - X_bars[n_ex])**2/n_trials
         Sbs = np.append(Sbs, sum)
-    var = 'Var'
     plt.title(fr"$S_b^2$ for std normal, $\langle S_b^2 \rangle$ = {Sbs.mean():.2f} " + r"$\text{Var}(S_b^2)$ = " +   fr"{Sbs.var():.2f}")
-    plt.ylabel(fr"Count")   
+    plt.ylabel("Count")
     plt.xlabel("$S_b^2$s")
     plt.hist(Sbs, bins = 50, edgecolor = "black")
     plt.savefig("HW3_3/HW3_3_2.png")
