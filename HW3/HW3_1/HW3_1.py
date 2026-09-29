@@ -106,9 +106,9 @@ def q1(data: np.array,n: int, p: float, ax: plt.axes.Axes)->None:
     ax.plot(xs,Pb, label = "binomial")
     ax.plot(xs, Pp, label = "poisson")
     
-    ax.set_title("Distrbution of Flares in a Day")
-    ax.set_ylabel(r"$P(x)$, Probability of obseving a flare in a day")
-    ax.set_xlabel("Number of flares observed in a day")
+    ax.set_title("Distribution of Flares in a Day")
+    ax.set_ylabel(r"$P(x)$, Probability of observing $x$ flares in a day")
+    ax.set_xlabel("$x$, Number of flares observed in a day")
     ax.legend()
 
 
@@ -148,7 +148,7 @@ def main():
     q1(data, hours_in_day, p_h, ax1)
     q2(data, n_days, ax2)
 
-    plt.savefig("HW3_1.png")
+    plt.savefig("HW3_1/HW3_1.png")
     plt.show()
 
 if __name__ == "__main__":
