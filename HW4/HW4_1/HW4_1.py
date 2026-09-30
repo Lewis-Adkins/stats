@@ -16,11 +16,11 @@ def get_alpha(confidence_level:float)-> float:
     return 1 - confidence_level
 
 def t_look_up(sample_size:int, alpha: float)-> float:
-    return stats.t.ppf(confidence_level, df = (sample_size - 1))
+    return stats.t.ppf(1 - alpha/2, df = (sample_size - 1))
 
 
-def z_look_up(data:np.array, confidence_level:float)-> float:
-    return stats.norm.ppf(confidence_level, loc = data.mean(), scale=data.var())
+def z_look_up(data:np.array, alpha:float)-> float:
+    return stats.norm.ppf(1 - alpha/2)
 
 def create_confidence_interval(mean: float, score:float, var:float, size: int )-> tuple[float, float]:
     l_bound = mean - score * var / np.sqrt(size)
@@ -53,9 +53,9 @@ def part_3()->None:
     
     for ss in sample_sizes:
         ci1 = part_1(ss)
-        ci1_diff = ci1[1] - ci1[0]
+        ci1_diff = abs(ci1[1] - ci1[0])
         ci2 = part_2(ss)
-        ci2_diff = ci2[1] - ci2[0]
+        ci2_diff = abs(ci2[1] - ci2[0])
         print(f"\t n = {ss} \t {ci1_diff:.5f} \t {ci2_diff:.5f}")
 
 
@@ -69,27 +69,27 @@ def main():
 if __name__ == "__main__":
     main()
 
-# Answer 1: The 99.0% CI interval is (9.415118924678817, 10.584881075321183)
-# Answer 2: The 99.0% CI interval is (4.3389441461200935, 15.765350924748772)
+# Answer 1: The 99.0% CI interval is (9.997075132312402, 10.002924867687598)
+# Answer 2: The 99.0% CI interval is (9.23297328436835, 10.278736751263407)
 # Answer 3:
 #          size(n)         ci1_length      ci2_length
-#          n = 5   3.45191         21.14082
-#          n = 10          1.83797         17.00533
-#          n = 15          1.39594         7.94957
-#          n = 20          1.16976         5.02799
-#          n = 25          1.02677         2.04093
-#          n = 30          0.92597         6.43247
-#          n = 35          0.85002         5.10949
-#          n = 40          0.79013         3.32269
-#          n = 45          0.74135         4.25931
-#          n = 50          0.70061         4.10005
-#          n = 55          0.66593         2.91986
-#          n = 60          0.63594         3.72418
-#          n = 65          0.60966         4.29743
-#          n = 70          0.58639         3.49176
-#          n = 75          0.56560         2.50464
-#          n = 80          0.54688         3.39865
-#          n = 85          0.52990         2.98401
-#          n = 90          0.51441         2.47802
-#          n = 95          0.50020         2.87414
-#          n = 100         0.48711         2.52836
+#          n = 5           0.01228         1.02798
+#          n = 10          0.00839         1.43500
+#          n = 15          0.00679         1.46435
+#          n = 20          0.00585         1.17110
+#          n = 25          0.00522         0.90395
+#          n = 30          0.00475         0.66180
+#          n = 35          0.00440         1.00893
+#          n = 40          0.00411         0.61500
+#          n = 45          0.00387         0.54436
+#          n = 50          0.00367         0.79538
+#          n = 55          0.00350         0.56458
+#          n = 60          0.00335         0.68521
+#          n = 65          0.00321         0.59800
+#          n = 70          0.00310         0.53263
+#          n = 75          0.00299         0.71879
+#          n = 80          0.00290         0.58002
+#          n = 85          0.00281         0.67357
+#          n = 90          0.00273         0.50827
+#          n = 95          0.00266         0.53151
+#          n = 100         0.00259         0.75243
