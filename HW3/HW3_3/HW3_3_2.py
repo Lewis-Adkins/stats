@@ -7,6 +7,8 @@ n_experiments = 10000
 # See my code for how to put re-used functions in a subdir named "lib".
 
 def get_dataset(n_trials: int, n_experiments: int)-> np.array:
+
+
     '''
 
     Draw n=100 values from a population of Gaussian-distributed numbers with mean μ=0 and standard deviation σ=1.
@@ -63,7 +65,7 @@ def part_1():
     plt.ylabel("Count")
     plt.xlabel("$S_b^2$s")
     plt.hist(Sbs, bins = 50, edgecolor = "black")
-    plt.savefig("HW3_3/HW3_3_2.png")
+    # plt.savefig("HW3_3/HW3_3_2.png")
     plt.show()
 
 
