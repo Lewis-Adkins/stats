@@ -109,7 +109,6 @@ def part_3():
     print(f"alpha/2:{alpha/2}, 1-alpha/2: {1-alpha/2}")
     print(f"var: {Ss.var()}")
     print(f"cv: {chi2_cv}")
-    # print(f"formula: ({datasets.size[0]-1} * {datasets.var()} / {crit_vals[0]}, {data.size-1} * {data.var()} / {crit_vals[1]})")
     print(f"ci: {np.sqrt(ci)}")
 def main():
 
@@ -122,5 +121,9 @@ def main():
     plt.savefig("HW4/HW4_2/HW4_2_2.png")
     plt.show()
 if __name__ == "__main__":
-    ## __name__ == "__main__" is really only needed when a script is imported
     main()
+
+# alpha/2:0.025000000000000022, 1-alpha/2: 0.975
+# var: 12276.319042491643
+# cv: (np.float64(16.918977604620448), np.float64(3.3251128430668158))
+# ci: [ 80.81059049 182.28550838]

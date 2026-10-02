@@ -28,7 +28,7 @@ def create_confidence_interval(mean: float, score:float, var:float, size: int )-
     return (float(l_bound), float(u_bound))
 
 def get_dataset(n_trials: int, n_experiments: int, mean: float, var: float)-> np.array:
-    return np.random.normal(loc=mean, scale= var, size = (n_trials, n_experiments))
+    return np.random.normal(size = (n_trials, n_experiments))
 
 
 def part_1(sample_size: int)-> tuple[float, float]:
