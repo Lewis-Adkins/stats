@@ -36,10 +36,10 @@ Quiz #2
 HW #3
 
 1. 5/5. See my changes to annotations. Also, connected lines probably not appropriate.
-2. 
+2. 5/5 - Great idea with looking at multiple lines for [-eps,eps]. In some cases, loglog fit is not appropriate because of flattening as you noted.
 3. 5/5
 
-Total: 
+Total: 15/15
 -------------------------------
 
 -------------------------------

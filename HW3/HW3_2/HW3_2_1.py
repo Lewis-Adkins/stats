@@ -47,13 +47,14 @@ def generate_sample_means(n_experiments: int, n_trials: int)-> np.array:
 
     X_bars = np.array([])
 
+    # Next refactor would be to avoid this loop by creating
+    # get_datasets(n_trials, n_experiments) and then computing mean of cols.
     for n_ex in range(n_experiments):
 
         data = get_dataset(n_trials)
         X_bars = np.append(X_bars, data.mean()) 
 
     return X_bars
-
 
 def main():
     
@@ -62,7 +63,7 @@ def main():
     plt.title(r"Average of $\bar{X}$")
     plt.xlabel(r"$\bar{X}$")
     plt.ylabel("Counts")
-    plt.savefig(f"HW3_2/HW3_2_1.png")
+    plt.savefig("HW3_2/HW3_2_1.png")
     plt.show()
 
 
