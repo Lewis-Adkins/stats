@@ -16,24 +16,30 @@ def get_alpha(confidence_level:float)-> float:
     return 1 - confidence_level
 
 def t_look_up(sample_size:int, alpha: float)-> float:
-    return stats.t.ppf(1 - alpha/2, df = (sample_size - 1))
+    return stats.t.ppf(0.995, df = (sample_size - 1))
 
 
 def z_look_up(data:np.array, alpha:float)-> float:
-    return stats.norm.ppf(1 - alpha/2)
+    # data is not being used
+    return stats.norm.ppf(0.995)
 
 def create_confidence_interval(mean: float, score:float, var:float, size: int )-> tuple[float, float]:
-    l_bound = mean - score * var / np.sqrt(size)
-    u_bound = mean + score * var / np.sqrt(size)
+    # Equation has "std" not "var". But you are passing std, so just poor
+    # naming.
+    l_bound = mean - score * np.sqrt(var) / np.sqrt(size)
+    u_bound = mean + score * np.sqrt(var) / np.sqrt(size)
     return (float(l_bound), float(u_bound))
 
 def get_dataset(n_trials: int, n_experiments: int, mean: float, var: float)-> np.array:
+    # You don't need to generate data.
+    # This is computing a normal with mean of 1.0
     return np.random.normal(size = (n_trials, n_experiments))
 
 
 def part_1(sample_size: int)-> tuple[float, float]:
     alpha = get_alpha(confidence_level)
     t = t_look_up(sample_size, confidence_level)
+    print(t)
     confidence_interval = create_confidence_interval(sample_mean, t, sample_var, sample_size)
     
     return confidence_interval
