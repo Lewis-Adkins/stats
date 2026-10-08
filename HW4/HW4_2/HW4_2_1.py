@@ -26,7 +26,7 @@ def main():
     confidence_interval = get_chi2_confidence_interval(crit_vals,data)
 
     print(f"alpha/2:{alpha/2}, 1-alpha/2: {1-alpha/2}")
-    print(f"var: {data.var()}")
+    print(f"var: {data.var()}") # Should this have ddof=1?
     print(f"cv: {crit_vals}")
     print(f"formula: ({data.size-1} * {data.var()} / {crit_vals[0]}, {data.size-1} * {data.var()} / {crit_vals[1]})")
     print(f"ci: {np.sqrt(confidence_interval)}")
@@ -39,4 +39,6 @@ if __name__ == "__main__":
 # var: 129246.36678200692
 # cv: (np.float64(7.961645572378552), np.float64(26.29622760486423))
 # formula: (16 * 129246.36678200692 / 7.961645572378552, 16 * 129246.36678200692 / 26.29622760486423)
+# CI should be in form [lower bound, upper bound]
 # ci: [509.64497087 280.42868668]
+# Why doesn't your CI match that in textbook? Did you check the intermediate values?
