@@ -28,7 +28,6 @@ def main():
     print(f"alpha/2:{alpha/2}, 1-alpha/2: {1-alpha/2}")
     print(f"var: {data.var()}")
     print(f"cv: {crit_vals}")
-    print(f"formula: ({data.size-1} * {data.var()} / {crit_vals[0]}, {data.size-1} * {data.var()} / {crit_vals[1]})")
     print(f"ci: {np.sqrt(confidence_interval)}")
 
 

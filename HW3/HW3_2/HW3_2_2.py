@@ -227,7 +227,7 @@ def get_fraction_within_epsilon(data: np.array, epsilon_min: float, epsilon_max:
 
     return data[(data >= epsilon_min) & (data <= epsilon_max)].size / data.size
 
-def get_dataset(n_trials: int, n_experiments: int, type: str) -> np.array:
+def get_dataset(n_trials: int, n_experiments: int, dist_type: str) -> np.array:
     '''
     Grabs dataset of type "type" and returns simulated data drawing from type of distribution
 
@@ -235,7 +235,7 @@ def get_dataset(n_trials: int, n_experiments: int, type: str) -> np.array:
     arg2: n_experiments = number of experiments
     arg3: type = distribution type from possible list =  ["std_norm", "uni", "bin", "poi", "chi2", "gauss", "geo"]
     '''
-    match type:
+    match dist_type:
         case "std_norm":
             '''
             f(x) = 1 / sqrt(2 * pi * sigma) * exp[-(x - mu)^2 / (2 * sigma ^2)]

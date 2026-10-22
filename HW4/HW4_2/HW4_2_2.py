@@ -27,18 +27,7 @@ def get_dataset(n_trials: int, n_experiments: int, dist_type: str = "std_norm")-
             arg2: n_trials = number of trials
             '''
             
-            return np.random.standard_normal(size = (n_experiments, n_trials))
-        case "chi2":
-            '''
-            f(x) = (1/2)^(k/2) / \\Gamma(k/2) x^((k/2)-1)e^(-k/2)
-
-            k = degrees of freedom
-            X = number of successful outcomes
-
-            the mode of chi2 is at the degrees of freedom -2 so we subtract chi2_df -2 
-            '''
-            return np.random.chisquare(chi2_df,size = (n_experiments, n_trials))
-       
+            return np.random.standard_normal(size = (n_experiments, n_trials))   
 def generate_sample_means(datasets: np.array)-> np.array:
     '''
     Compute  \bar{X} .
