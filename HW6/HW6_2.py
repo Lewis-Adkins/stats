@@ -5,8 +5,6 @@ import matplotlib.pyplot as plt
 x = np.array([55.10, 44.83, 46.32, 51.10, 49.89, 45.20, 48.18, 46.70, 54.31, 41.50, 47.50, 52.00, 52.25, 50.86, 51.66, 54.77, 57.06, 57.84, 55.22])
 y = np.array([49.10, 31.20, 32.80, 42.60, 42.50, 32.70, 36.21, 40.40, 37.42, 30.80, 35.34, 44.80, 41.75, 39.35, 44.07, 43.40, 45.30, 39.08, 41.89])
 
-RHO_0 = 0.5  # null hypothesis H0: rho = 0.5, alternative Ha: rho > 0.5
-
 def get_sxx(x: np.array) -> float:
     return (x**2).sum() - (x.sum())**2 / x.shape[0]
 
@@ -18,6 +16,12 @@ def get_syy(y: np.array) -> float:
 
 def get_r(sxy: float, sxx: float, syy: float) -> float:
     return sxy / np.sqrt(sxx * syy)
+
+def get_cov(x: np.array, y: np.array) -> float:
+    return ((x - x.mean()) * (y - y.mean())).sum() / (x.shape[0] - 1)
+
+def get_rho(x: np.array, y: np.array) -> float:
+    return get_cov(x, y) / (x.std(ddof=1) * y.std(ddof=1))
 
 def get_v(r: float) -> float:
     # Fisher transformation of r
@@ -51,13 +55,15 @@ def main() -> None:
     syy = get_syy(y)
     sxy = get_sxy(x, y)
     r   = get_r(sxy, sxx, syy)
+    rho = get_rho(x, y)
     v   = get_v(r)
-    z   = get_z(v, RHO_0, n)
+    z   = get_z(v, 0.5, n)  # H0: rho = 0.5, Ha: rho > 0.5
     P   = get_P(z, "upper")
     print(f'Sxx = {sxx:.4f}')
     print(f'Syy = {syy:.4f}')
     print(f'Sxy = {sxy:.4f}')
     print(f'r   = {r:.4f}')
+    print(f'rho = {rho:.4f}')
     print(f'v   = {v:.4f}')
     print(f'z   = {z:.4f}')
     print(f'P   = {P:.4f}')
