@@ -235,7 +235,7 @@ def part7():
   y = np.full(n, np.nan)
   i = 5 # The frequency index for the sine wave. i = 1 means the sine wave
          # will have a frequency of i/n cycles per sample and a period of n/i samples.
-  sigma = 1e40 # Standard deviation of the noise
+  sigma = 1.4 # Standard deviation of the noise
   for t in range(n):
     epsilon = np.random.normal(loc=0, scale=sigma)
     y[t] = epsilon + np.sin(2 * np.pi * (i/n) * t )
