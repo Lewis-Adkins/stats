@@ -77,6 +77,29 @@ Total: 6/15
 -------------------------------
 
 -------------------------------
+HW #5
+
+1. 5/5 - Good attempt with dashed lines, but I don't agree because they assume no
+         uncertainty in intercept. See Devore Figure 12.13 and
+         https://blogs.sas.com/content/iml/2020/10/12/visualize-uncertainty-regression-predictions.html
+         for alternatives.
+2. 4/5 - Your fft code does not return the same elements as the manual code.
+
+Total: 9/10
+-------------------------------
+
+-------------------------------
+HW #6
+
+1. 5/5
+2. 5/5
+
+Total: 10/10
+-------------------------------
+
+
+
+-------------------------------
 Midterm: 25/35
 Midterm supplementary problem 1.: 5/5
 Midterm updated: (25+5)/(35+5) = 30/40
