@@ -70,7 +70,7 @@ def main():
     part_3(incoming_signal)
     part_4(incoming_signal, significance_level)
     plt.legend()
-
+    plt.savefig('HW8')
     plt.show()
 
 
