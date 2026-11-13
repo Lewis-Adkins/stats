@@ -18,7 +18,7 @@ def get_coeff(y_t: np.array, index: int)->np.array:
 
 
     freq = 2 * np.pi * index / N * t
-    return 2 / N * (y_t * np.cos(freq)).sum(axis = 0), 2 / N * (y_t * np.sin(freq)).sum(axis = 0) 
+    return 2 / N * (y_t * np.cos(freq)).sum(axis = 0), 2 / N * (y_t * np.sin(freq)).sum(axis = 0)
 
 def get_periodogram_amplitude(a_5: np.array, b_5:np.array, signal: np.array)-> np.array:
     N = signal.shape[0]
@@ -32,17 +32,17 @@ def get_confidence_interval(signal: np.array, significance_level: float)-> tuple
     N = signal.shape[0]
     signal_var = signal.var(ddof = 1)
     l_chi2 = stats.chi2.ppf(significance_level / 2, chi2_df)
-    u_chi2 = stats.chi2.ppf(1 - significance_level / 2, chi2_df)
+    u_chi2 = stats.chi2.ppf(1 - significance_level / 2, chi2_df) 
 
     l_bound = signal_var * l_chi2
-    u_bound = signal_var* u_chi2
+    u_bound = signal_var* u_chi2 # https://www.stat.berkeley.edu/~bartlett/courses/153-fall2010/lectures/20.pdf
     print(l_bound, u_bound, signal_var)
     return l_bound, u_bound
 
 def part_1(n_trials :int, n_experiments:int, index: int)->tuple[int]:
     y_t = get_y_t(n_trials, n_experiments)
     a_5, b_5 = get_coeff(y_t, index)
-    periodogram_amplitudes = get_periodogram_amplitude(a_5, b_5, y_t) 
+    periodogram_amplitudes = get_periodogram_amplitude(a_5, b_5, y_t)
     counts, bins, _ = plt.hist(periodogram_amplitudes, density = True, bins = 100, edgecolor = "black", label = fr'$I(f_5)$')
     return counts, bins
 
@@ -54,8 +54,9 @@ def part_2()-> None:
 def part_3(incoming_signal: np.array)-> None:
     a_5, b_5 = get_coeff(incoming_signal, 5)
     print(a_5, b_5)
-    periodogram_amplitudes = get_periodogram_amplitude(a_5, b_5, incoming_signal) 
+    periodogram_amplitudes = get_periodogram_amplitude(a_5, b_5, incoming_signal)
     print(periodogram_amplitudes)
+    plt.title("The signal is just outside of the confidence interval. I did not compute a p value but we reject the signal is noise")
     plt.vlines(periodogram_amplitudes,0,.6, label = 'Incoming Signal', color = 'r')
 
 def part_4(incoming_signal: np.array, significance_level:float)->None:
