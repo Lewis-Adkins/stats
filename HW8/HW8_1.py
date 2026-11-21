@@ -34,6 +34,10 @@ def get_confidence_interval(signal: np.array, significance_level: float)-> tuple
     l_chi2 = stats.chi2.ppf(significance_level / 2, chi2_df)
     u_chi2 = stats.chi2.ppf(1 - significance_level / 2, chi2_df) 
 
+    # Should be 
+    # ci_lower = I5/chi2.ppf(0.975, df=2)
+    # ci_upper = I5/chi2.ppf(0.025, df=2)
+    # See my code comments.
     l_bound = signal_var * l_chi2
     u_bound = signal_var* u_chi2 # https://www.stat.berkeley.edu/~bartlett/courses/153-fall2010/lectures/20.pdf
     print(l_bound, u_bound, signal_var)
@@ -56,6 +60,7 @@ def part_3(incoming_signal: np.array)-> None:
     print(a_5, b_5)
     periodogram_amplitudes = get_periodogram_amplitude(a_5, b_5, incoming_signal)
     print(periodogram_amplitudes)
+    # What is the confidence interval? What is the statistical statement?
     plt.title("The signal is just outside of the confidence interval. I did not compute a p value but we reject the signal is noise")
     plt.vlines(periodogram_amplitudes,0,.6, label = 'Incoming Signal', color = 'r')
 
