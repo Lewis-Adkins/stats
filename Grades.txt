@@ -122,6 +122,12 @@ Total: 8/10
 -------------------------------
 
 -------------------------------
+HW #9
+
+Total: 8/10 - Code did not work b/c np.trapezoid is not a function. How were you able to run?
+-------------------------------
+
+-------------------------------
 Midterm: 25/35
 Midterm supplementary problem 1.: 5/5
 Midterm supplementary problem 3.: 3/5 (not counted, does not improve)

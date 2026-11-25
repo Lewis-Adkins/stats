@@ -1,4 +1,5 @@
 import numpy as np
+from scipy.integrate import trapezoid
 from scipy.stats import norm
 import math
 import matplotlib.pyplot as plt
@@ -46,6 +47,8 @@ def score_confidence_interval_large(data:np.array)-> np.array:
     return np.vstack((l_bound, u_bound))
 
 def part_1()-> None:
+    # Why are you computing data? Only want values for given result, not
+    # arbitrary simulation.
     data      = generate_binary_dataset(data_size, probability_heads)
     sci_small = score_confidence_interval_small(data)
     sci_large = score_confidence_interval_large(data)
@@ -64,7 +67,7 @@ def part_2()->None:
 
     thetas  = np.linspace(0,1,100)
     likelihoods = likelihood(thetas, 4,10)
-    evidence = np.trapezoid(likelihoods, thetas)
+    evidence = trapezoid(likelihoods, thetas)
     posterior = likelihoods / evidence
     print('P(D|0): ', likelihoods)
     print('P(D):', evidence)
@@ -80,10 +83,11 @@ def part_2()->None:
     for a in a_vals:
         thetas = np.linspace(0, a, 100)
         posterior = likelihood(thetas, 4, 10) / evidence
-        areas.append(np.trapezoid(posterior, thetas))
+        areas.append(trapezoid(posterior, thetas))
 
 
     plt.plot(a_vals, areas)
+    # Y-label?
     plt.xlabel('a')
     plt.savefig('HW9_2_2.png')
 
